@@ -1,13 +1,24 @@
 package ua.com.alevel.alexshent.model;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Automobile extends Vehicle {
+    private AutomobileManufacturers manufacturer;
     private String bodyType;
 
     public Automobile(String model, AutomobileManufacturers manufacturer, BigDecimal price, String bodyType) {
-        super(model, manufacturer, price);
+        super(model, price);
+        this.manufacturer = manufacturer;
         this.bodyType = bodyType;
+    }
+
+    public AutomobileManufacturers getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(AutomobileManufacturers manufacturer) {
+        this.manufacturer = manufacturer;
     }
 
     public String getBodyType() {
@@ -22,12 +33,17 @@ public class Automobile extends Vehicle {
     public boolean equals(Object object) {
         if (object instanceof Automobile) {
             return
-                    this.model.equals( ((Automobile) object).getModel() )
-                    && this.price.equals( ((Automobile) object).getPrice() )
-                    && this.manufacturer == ((Automobile) object).getManufacturer()
-                    && this.bodyType.equals( ((Automobile) object).getBodyType() );
+                    Objects.equals(model, ((Automobile) object).getModel())
+                            && Objects.equals(price, ((Automobile) object).getPrice())
+                            && this.manufacturer == ((Automobile) object).getManufacturer()
+                            && Objects.equals(bodyType, ((Automobile) object).getBodyType());
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, bodyType);
     }
 
     @Override
