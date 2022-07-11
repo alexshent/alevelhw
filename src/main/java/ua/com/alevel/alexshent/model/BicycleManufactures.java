@@ -1,5 +1,5 @@
 package ua.com.alevel.alexshent.model;
 
-public enum BicycleManufactures implements Manufacturer {
+public enum BicycleManufactures {
     AAA, BBB, CCC
 }

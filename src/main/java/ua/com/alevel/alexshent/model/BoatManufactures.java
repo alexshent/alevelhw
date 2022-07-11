@@ -1,5 +1,5 @@
 package ua.com.alevel.alexshent.model;
 
-public enum BoatManufactures implements Manufacturer {
+public enum BoatManufactures {
     DDD, EEE, FFF
 }

@@ -1,5 +1,5 @@
 package ua.com.alevel.alexshent.model;
 
-public enum AutomobileManufacturers implements Manufacturer {
+public enum AutomobileManufacturers {
     KIA, BMW, ZAZ, OPEL
 }
