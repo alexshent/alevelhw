@@ -33,7 +33,6 @@ public class AutomobileService extends Service<Automobile> {
         return result;
     }
 
-    @Override
     protected AutomobileManufacturers getRandomManufacturer() {
         final AutomobileManufacturers[] values = AutomobileManufacturers.values();
         final int index = RANDOM.nextInt(values.length);
