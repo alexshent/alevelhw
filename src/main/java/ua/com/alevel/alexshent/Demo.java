@@ -32,21 +32,19 @@ public class Demo {
     }
 
     public void changeBoatProduct() {
-        Repository<Boat> boatRepository = boatService.getRepository();
-        Boat boat = boatRepository.getById(targetBoatId);
+        Boat  boat = boatService.getProductById(targetBoatId);
         System.out.println("------------------");
         boatService.printAll();
         boat.setModel("m-m-m");
-        boatRepository.update(boat);
+        boatService.updateProduct(boat);
         System.out.println("------------------");
         boatService.printAll();
     }
 
     public void deleteBoatProduct() {
-        Repository<Boat> boatRepository = boatService.getRepository();
         System.out.println("------------------");
         boatService.printAll();
-        boatRepository.delete(targetBoatId);
+        boatService.deleteProduct(targetBoatId);
         System.out.println("------------------");
         boatService.printAll();
     }
