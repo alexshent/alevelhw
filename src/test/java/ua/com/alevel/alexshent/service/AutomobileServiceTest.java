@@ -1,14 +1,12 @@
 package ua.com.alevel.alexshent.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatcher;
 import ua.com.alevel.alexshent.model.Automobile;
-import ua.com.alevel.alexshent.model.AutomobileManufacturers;
 import ua.com.alevel.alexshent.repository.AutomobileRepository;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,64 +15,13 @@ import static org.mockito.Mockito.*;
 
 class AutomobileServiceTest {
 
-    @Test
-    void deleteProduct_validId() {
-        // given
-        final int numberOfAutos = 5;
-        final boolean expectedDeleteResult = true;
-        // when
-        AutomobileService service = new AutomobileService();
-        List<Automobile> autos = service.createAutos(numberOfAutos);
-        String targetAutoId = autos.get(0).getId();
-        service.saveProducts(autos);
-        boolean actualDeleteResult = service.deleteProduct(targetAutoId);
-        Automobile automobileFromService = service.getProductById(targetAutoId);
-        // then
-        assertEquals(expectedDeleteResult, actualDeleteResult);
-        assertNull(automobileFromService);
-    }
+    private AutomobileRepository repositoryMock;
+    private AutomobileService service;
 
-    @Test
-    void deleteProduct_invalidId() {
-        // given
-        final int numberOfAutos = 5;
-        final boolean expectedDeleteResult = false;
-        final String invalidId = "a12345";
-        // when
-        AutomobileService service = new AutomobileService();
-        List<Automobile> autos = service.createAutos(numberOfAutos);
-        service.saveProducts(autos);
-        boolean actualDeleteResult = service.deleteProduct(invalidId);
-        Automobile automobileFromService = service.getProductById(invalidId);
-        // then
-        assertEquals(expectedDeleteResult, actualDeleteResult);
-        assertNull(automobileFromService);
-    }
-
-    @Test
-    void updateProduct() {
-        // given
-        final AutomobileManufacturers firstManufacturer = AutomobileManufacturers.OPEL;
-        final AutomobileManufacturers secondManufacturer = AutomobileManufacturers.BMW;
-        final boolean expectedUpdateResult = true;
-        final AutomobileManufacturers expectedFirstManufacturer = AutomobileManufacturers.OPEL;
-        final AutomobileManufacturers expectedSecondManufacturer = AutomobileManufacturers.BMW;
-        // when
-        Automobile automobile = new Automobile("AAA", firstManufacturer, BigDecimal.valueOf(12345.67), "BBB");
-        List<Automobile> list = new ArrayList<>();
-        list.add(automobile);
-        AutomobileService service = new AutomobileService();
-        service.saveProducts(list);
-        Automobile automobileFromService = service.getProductById(automobile.getId());
-        AutomobileManufacturers actualFirstManufacturer = automobileFromService.getManufacturer();
-        automobile.setManufacturer(secondManufacturer);
-        boolean actualUpdateResult = service.updateProduct(automobile);
-        automobileFromService = service.getProductById(automobile.getId());
-        AutomobileManufacturers actualSecondManufacturer = automobileFromService.getManufacturer();
-        // then
-        assertEquals(expectedUpdateResult, actualUpdateResult);
-        assertEquals(expectedFirstManufacturer, actualFirstManufacturer);
-        assertEquals(expectedSecondManufacturer, actualSecondManufacturer);
+    @BeforeEach
+    void setUp() {
+        repositoryMock = mock(AutomobileRepository.class);
+        service = new AutomobileService(repositoryMock);
     }
 
     /**
@@ -84,8 +31,6 @@ class AutomobileServiceTest {
     void saveProducts_argumentCaptor() {
         // given
         final int numberOfAutos = 5;
-        AutomobileRepository repositoryMock = mock(AutomobileRepository.class);
-        AutomobileService service = new AutomobileService(repositoryMock);
         List<Automobile> list = service.createAutos(numberOfAutos);
         // when
         service.saveProducts(list);
@@ -103,8 +48,6 @@ class AutomobileServiceTest {
     void saveProducts_argumentMatcher() {
         // given
         final int numberOfAutos = 5;
-        AutomobileRepository repositoryMock = mock(AutomobileRepository.class);
-        AutomobileService service = new AutomobileService(repositoryMock);
         List<Automobile> list = service.createAutos(numberOfAutos);
         // when
         service.saveProducts(list);
@@ -112,5 +55,23 @@ class AutomobileServiceTest {
         verify(repositoryMock).create(argThat((ArgumentMatcher<List<Automobile>>) autosList -> {
             return autosList instanceof LinkedList<Automobile> && list.size() == numberOfAutos;
         }));
+    }
+
+    /**
+     * throws exception
+     */
+    @Test
+    void getProductById_ThrowException() {
+        // given
+        final String automobileId = "aaa-1";
+        final int wantedNumberOfInvocations = 1;
+        // when
+        // then
+        when(repositoryMock.getById(automobileId)).thenThrow(new RuntimeException());
+        assertThrows(RuntimeException.class, () -> {
+            service.getProductById(automobileId);
+        });
+        verify(repositoryMock, times(wantedNumberOfInvocations)).getById(anyString());
+        verifyNoMoreInteractions(repositoryMock);
     }
 }

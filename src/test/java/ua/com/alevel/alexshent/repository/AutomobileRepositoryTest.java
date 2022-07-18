@@ -1,5 +1,6 @@
 package ua.com.alevel.alexshent.repository;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ua.com.alevel.alexshent.model.Automobile;
 import ua.com.alevel.alexshent.model.AutomobileManufacturers;
@@ -11,12 +12,18 @@ import static org.mockito.Mockito.*;
 
 class AutomobileRepositoryTest {
 
+    private AutomobileRepository repository;
+
+    @BeforeEach
+    void setUp() {
+        repository = new AutomobileRepository();
+    }
+
     @Test
     void getById_repositoryIsEmpty() {
         // given
         final String automobileId = "a1";
         // when
-        AutomobileRepository repository = new AutomobileRepository();
         Automobile automobileFromRepository = repository.getById(automobileId);
         // then
         assertNull(automobileFromRepository);
@@ -25,20 +32,14 @@ class AutomobileRepositoryTest {
     @Test
     void getById_repositoryIsNotEmpty() {
         // given
-        final int wantedNumberOfInvocations = 1;
-        final String automobileId = "a1";
         // when
-        Automobile automobileMock = mock(Automobile.class);
-        when(automobileMock.getId()).thenReturn(automobileId);
-        AutomobileRepository repository = new AutomobileRepository();
-        repository.create(automobileMock);
+        Automobile automobile = new Automobile("AAA", AutomobileManufacturers.BMW, BigDecimal.valueOf(12345.67), "BBB");
+        String automobileId = automobile.getId();
+        repository.create(automobile);
         Automobile automobileFromRepository = repository.getById(automobileId);
         // then
         assertNotNull(automobileFromRepository);
-        assertSame(automobileFromRepository, automobileMock);
-        verify(automobileMock, times(wantedNumberOfInvocations)).getId();
-        verify(automobileMock, never()).getBodyType();
-        verifyNoMoreInteractions(automobileMock);
+        assertSame(automobileFromRepository, automobile);
     }
 
     /**
@@ -48,7 +49,6 @@ class AutomobileRepositoryTest {
     void getById_repositoryIsNotEmpty_Spy() {
         // given
         // when
-        AutomobileRepository repository = new AutomobileRepository();
         AutomobileRepository spy = spy(repository);
         Automobile automobile = new Automobile("AAA", AutomobileManufacturers.BMW, BigDecimal.valueOf(12345.67), "BBB");
         String automobileId = automobile.getId();
@@ -56,19 +56,5 @@ class AutomobileRepositoryTest {
         Automobile automobileFromRepository = spy.getById(automobileId);
         // then
         assertEquals(automobile.getPrice(), automobileFromRepository.getPrice());
-    }
-
-    /**
-     * throws exception
-     */
-    @Test
-    void getById_repositoryIsNotEmpty_Exception() {
-        AutomobileRepository repository = new AutomobileRepository();
-        Automobile automobileMock = mock(Automobile.class);
-        when(automobileMock.getId()).thenThrow(new RuntimeException());
-        repository.create(automobileMock);
-        assertThrows(RuntimeException.class, () -> {
-            repository.getById("a1");
-        });
     }
 }
