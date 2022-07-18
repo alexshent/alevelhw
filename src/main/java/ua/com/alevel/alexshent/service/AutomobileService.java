@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import ua.com.alevel.alexshent.model.Automobile;
 import ua.com.alevel.alexshent.model.AutomobileManufacturers;
 import ua.com.alevel.alexshent.repository.AutomobileRepository;
+import ua.com.alevel.alexshent.repository.Repository;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -16,6 +17,10 @@ public class AutomobileService extends Service<Automobile> {
 
     public AutomobileService() {
         repository = new AutomobileRepository();
+    }
+
+    public AutomobileService(Repository<Automobile> repository) {
+        this.repository = repository;
     }
 
     public List<Automobile> createAutos(int count) {

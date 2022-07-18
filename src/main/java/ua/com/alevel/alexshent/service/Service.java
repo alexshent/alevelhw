@@ -1,6 +1,5 @@
 package ua.com.alevel.alexshent.service;
 
-import ua.com.alevel.alexshent.model.Boat;
 import ua.com.alevel.alexshent.repository.Repository;
 
 import java.util.List;
