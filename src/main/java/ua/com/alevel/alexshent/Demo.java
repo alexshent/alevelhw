@@ -1,13 +1,16 @@
 package ua.com.alevel.alexshent;
 
-import ua.com.alevel.alexshent.model.Automobile;
-import ua.com.alevel.alexshent.model.Bicycle;
-import ua.com.alevel.alexshent.model.Boat;
+import ua.com.alevel.alexshent.model.*;
 import ua.com.alevel.alexshent.repository.Repository;
 import ua.com.alevel.alexshent.service.AutomobileService;
 import ua.com.alevel.alexshent.service.BicycleService;
 import ua.com.alevel.alexshent.service.BoatService;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Demo {
@@ -47,5 +50,60 @@ public class Demo {
         boatService.deleteProduct(targetBoatId);
         System.out.println("------------------");
         boatService.printAll();
+    }
+
+    public void useGarage() {
+        Vehicle vehicle = new Automobile("AAA", AutomobileManufacturers.BMW, BigDecimal.valueOf(123.45), "BBB");
+        Refresh refresh1 = new Refresh(vehicle, 1, LocalDateTime.now());
+        Refresh refresh2 = new Refresh(vehicle, 2, LocalDateTime.now());
+        Refresh refresh3 = new Refresh(vehicle, 3, LocalDateTime.now());
+        Garage garage = new Garage();
+        garage.add(refresh3);
+        garage.add(refresh2);
+        garage.add(refresh1);
+        System.out.println("size = " + garage.getSize());
+        System.out.println("first = " + garage.getFirstDate());
+        System.out.println("last = " + garage.getLastDate());
+        System.out.println(garage.findById(2).toString());
+        Refresh refresh4 = new Refresh(vehicle, 4, LocalDateTime.now());
+        garage.replace(1, refresh4);
+        garage.delete(2);
+        for (Refresh refresh : garage) {
+            System.out.println(refresh);
+        }
+    }
+
+    public void useVehicleComparator() {
+        class VehicleComparator<V extends Vehicle> implements Comparator<V> {
+            @Override
+            public int compare(V first, V second) {
+                // price, desc
+                if (!first.getPrice().equals(second.getPrice())) {
+                    return second.getPrice().compareTo(first.getPrice());
+                }
+                // model, asc
+                if (!first.getModel().equals(second.getModel())) {
+                    return first.getModel().compareTo(second.getModel());
+                }
+                // id, asc
+                return first.getId().compareTo(second.getId());
+            }
+        }
+
+        List<Automobile> list = new ArrayList<>();
+        Automobile automobile1 = new Automobile("AAA1", AutomobileManufacturers.BMW, BigDecimal.valueOf(1.99), "BBB1");
+        Automobile automobile2 = new Automobile("AAA2", AutomobileManufacturers.BMW, BigDecimal.valueOf(2.99), "BBB2");
+        Automobile automobile3 = new Automobile("AAA3", AutomobileManufacturers.BMW, BigDecimal.valueOf(3.99), "BBB3");
+        Automobile automobile4 = new Automobile("AAA4", AutomobileManufacturers.BMW, BigDecimal.valueOf(4.99), "BBB4");
+        Automobile automobile5 = new Automobile("AAA5", AutomobileManufacturers.BMW, BigDecimal.valueOf(5.99), "BBB5");
+        list.add(automobile1);
+        list.add(automobile2);
+        list.add(automobile3);
+        list.add(automobile4);
+        list.add(automobile5);
+        list.sort(new VehicleComparator<>());
+        for (Automobile automobile : list) {
+            System.out.println(automobile.toString());
+        }
     }
 }

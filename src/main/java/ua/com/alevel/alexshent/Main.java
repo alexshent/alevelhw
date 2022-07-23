@@ -7,5 +7,7 @@ public class Main {
         demo.createProducts();
         demo.changeBoatProduct();
         demo.deleteBoatProduct();
+        demo.useGarage();
+        demo.useVehicleComparator();
     }
 }
