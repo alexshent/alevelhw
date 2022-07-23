@@ -35,7 +35,7 @@ public class Demo {
     }
 
     public void changeBoatProduct() {
-        Boat  boat = boatService.getProductById(targetBoatId);
+        Boat boat = boatService.getProductById(targetBoatId);
         System.out.println("------------------");
         boatService.printAll();
         boat.setModel("m-m-m");
@@ -73,18 +73,26 @@ public class Demo {
         }
     }
 
-    public void useVehicleComparator() {
-        class VehicleComparator<V extends Vehicle> implements Comparator<V> {
+    public void useVehicleComparators() {
+        class VehicleComparatorPriceDesc<V extends Vehicle> implements Comparator<V> {
             @Override
             public int compare(V first, V second) {
                 // price, desc
-                if (!first.getPrice().equals(second.getPrice())) {
-                    return second.getPrice().compareTo(first.getPrice());
-                }
+                return second.getPrice().compareTo(first.getPrice());
+            }
+        }
+
+        class VehicleComparatorModelAsc<V extends Vehicle> implements Comparator<V> {
+            @Override
+            public int compare(V first, V second) {
                 // model, asc
-                if (!first.getModel().equals(second.getModel())) {
-                    return first.getModel().compareTo(second.getModel());
-                }
+                return first.getModel().compareTo(second.getModel());
+            }
+        }
+
+        class VehicleComparatorIdAsc<V extends Vehicle> implements Comparator<V> {
+            @Override
+            public int compare(V first, V second) {
                 // id, asc
                 return first.getId().compareTo(second.getId());
             }
@@ -101,7 +109,10 @@ public class Demo {
         list.add(automobile3);
         list.add(automobile4);
         list.add(automobile5);
-        list.sort(new VehicleComparator<>());
+        Comparator<Automobile> comparator = new VehicleComparatorPriceDesc<Automobile>()
+                .thenComparing(new VehicleComparatorModelAsc<>())
+                .thenComparing(new VehicleComparatorIdAsc<>());
+        list.sort(comparator);
         for (Automobile automobile : list) {
             System.out.println(automobile.toString());
         }

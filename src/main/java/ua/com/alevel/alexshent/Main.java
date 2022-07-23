@@ -8,6 +8,6 @@ public class Main {
         demo.changeBoatProduct();
         demo.deleteBoatProduct();
         demo.useGarage();
-        demo.useVehicleComparator();
+        demo.useVehicleComparators();
     }
 }
