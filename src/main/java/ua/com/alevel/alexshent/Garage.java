@@ -12,7 +12,7 @@ public class Garage implements Iterable<Refresh> {
     }
 
     public void add(Refresh refresh) {
-        list.add(refresh);
+        list.addFirst(refresh);
         Collections.sort(list);
     }
 
