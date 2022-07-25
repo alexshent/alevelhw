@@ -6,6 +6,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatcher;
 import ua.com.alevel.alexshent.model.Automobile;
 import ua.com.alevel.alexshent.repository.AutomobileRepository;
+import ua.com.alevel.alexshent.repository.Repository;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -22,6 +23,37 @@ class AutomobileServiceTest {
     void setUp() {
         repositoryMock = mock(AutomobileRepository.class);
         service = new AutomobileService(repositoryMock);
+    }
+
+    @Test
+    void testRepositoryMock() {
+        assertNotNull(repositoryMock);
+        assertInstanceOf(AutomobileRepository.class, repositoryMock);
+    }
+
+    @Test
+    void createAutos_returnsListOfExpectedSize() {
+        // given
+        final int numberOfAutos = 5;
+        final int expected = 5;
+        // when
+        List<Automobile> autos = service.createAutos(numberOfAutos);
+        int actual = autos.size();
+        // then
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void createAutos_returnsNotNull() {
+        // given
+        final int numberOfAutos = 0;
+        final int expected = 0;
+        // when
+        List<Automobile> autos = service.createAutos(numberOfAutos);
+        // then
+        assertNotNull(autos);
+        int actual = autos.size();
+        assertEquals(expected, actual);
     }
 
     /**
@@ -52,9 +84,9 @@ class AutomobileServiceTest {
         // when
         service.saveProducts(list);
         // then
-        verify(repositoryMock).create(argThat((ArgumentMatcher<List<Automobile>>) autosList -> {
-            return autosList instanceof LinkedList<Automobile> && list.size() == numberOfAutos;
-        }));
+        verify(repositoryMock).create(argThat((ArgumentMatcher<List<Automobile>>) autosList
+                -> autosList instanceof LinkedList<Automobile> && list.size() == numberOfAutos
+        ));
     }
 
     /**
@@ -68,9 +100,7 @@ class AutomobileServiceTest {
         // when
         // then
         when(repositoryMock.getById(automobileId)).thenThrow(new RuntimeException());
-        assertThrows(RuntimeException.class, () -> {
-            service.getProductById(automobileId);
-        });
+        assertThrows(RuntimeException.class, () -> service.getProductById(automobileId));
         verify(repositoryMock, times(wantedNumberOfInvocations)).getById(anyString());
         verifyNoMoreInteractions(repositoryMock);
     }
