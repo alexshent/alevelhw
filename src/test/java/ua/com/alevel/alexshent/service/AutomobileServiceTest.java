@@ -6,7 +6,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatcher;
 import ua.com.alevel.alexshent.model.Automobile;
 import ua.com.alevel.alexshent.repository.AutomobileRepository;
-import ua.com.alevel.alexshent.repository.Repository;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -68,7 +67,7 @@ class AutomobileServiceTest {
         service.saveProducts(list);
         // then
         ArgumentCaptor<List<Automobile>> listArgumentCaptor = ArgumentCaptor.forClass((Class) List.class);
-        verify(repositoryMock).create(listArgumentCaptor.capture());
+        verify(repositoryMock).addList(listArgumentCaptor.capture());
         List<Automobile> actualList = listArgumentCaptor.getValue();
         assertSame(list, actualList);
     }
@@ -84,7 +83,7 @@ class AutomobileServiceTest {
         // when
         service.saveProducts(list);
         // then
-        verify(repositoryMock).create(argThat((ArgumentMatcher<List<Automobile>>) autosList
+        verify(repositoryMock).addList(argThat((ArgumentMatcher<List<Automobile>>) autosList
                 -> autosList instanceof LinkedList<Automobile> && list.size() == numberOfAutos
         ));
     }
