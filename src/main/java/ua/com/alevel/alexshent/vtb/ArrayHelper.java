@@ -1,7 +1,7 @@
 package ua.com.alevel.alexshent.vtb;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ArrayHelper<T> {
 
@@ -21,7 +21,7 @@ public class ArrayHelper<T> {
     /**
      * Написать метод, который преобразует массив в ArrayList
      */
-    public ArrayList<T> toArrayList(T[] array) {
-        return new ArrayList<>(Arrays.asList(array));
+    public List<T> toArrayList(T[] array) {
+        return Arrays.asList(array);
     }
 }

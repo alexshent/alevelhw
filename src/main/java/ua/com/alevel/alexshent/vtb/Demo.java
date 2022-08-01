@@ -1,6 +1,6 @@
 package ua.com.alevel.alexshent.vtb;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Demo {
     public void useArrayHelper() {
@@ -13,7 +13,7 @@ public class Demo {
             System.out.println(element);
         }
 
-        ArrayList<Integer> arrayList = arrayHelper.toArrayList(array);
+        List<Integer> arrayList = arrayHelper.toArrayList(array);
         System.out.println(arrayList.getClass().getName());
         for (Integer element : arrayList) {
             System.out.println(element);
