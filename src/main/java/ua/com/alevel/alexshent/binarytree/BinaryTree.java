@@ -10,7 +10,7 @@ public class BinaryTree<T extends Costly> {
     private final Comparator<T> comparator;
 
     public BinaryTree(Comparator<T> comparator) {
-        this.rootNode = new Node<>(null, comparator);
+        this.rootNode = new Node<>(null);
         this.comparator = comparator;
     }
 
@@ -41,13 +41,13 @@ public class BinaryTree<T extends Costly> {
             node.setValue(value);
         } else if (comparator.compare(value, node.getValue()) < 0) {
             if (node.getLeftChild() == null) {
-                node.setLeftChild(new Node<>(value, comparator));
+                node.setLeftChild(new Node<>(value));
             } else {
                 add(node.getLeftChild(), value);
             }
         } else if (comparator.compare(value, node.getValue()) > 0) {
             if (node.getRightChild() == null) {
-                node.setRightChild(new Node<>(value, comparator));
+                node.setRightChild(new Node<>(value));
             } else {
                 add(node.getRightChild(), value);
             }

@@ -8,11 +8,9 @@ public class Node<T> {
     private T value;
     private Node<T> leftChild;
     private Node<T> rightChild;
-    private Comparator<T> comparator;
 
-    public Node(T value, Comparator<T> comparator) {
+    public Node(T value) {
         this.value = value;
-        this.comparator = comparator;
     }
 
     public T getValue() {
@@ -37,30 +35,6 @@ public class Node<T> {
 
     public void setRightChild(Node<T> rightChild) {
         this.rightChild = rightChild;
-    }
-
-    public Comparator<T> getComparator() {
-        return comparator;
-    }
-
-    public void setComparator(Comparator<T> comparator) {
-        this.comparator = comparator;
-    }
-
-    public void insert(Node<T> node) {
-        if (comparator.compare(node.getValue(), value) < 0) {
-            if (leftChild != null) {
-                leftChild.insert(node);
-            } else {
-                leftChild = node;
-            }
-        } else if (comparator.compare(node.getValue(), value) > 0) {
-            if (rightChild != null) {
-                rightChild.insert(node);
-            } else {
-                rightChild = node;
-            }
-        }
     }
 
     public List<T> getChildValues() {
