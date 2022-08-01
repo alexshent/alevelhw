@@ -44,8 +44,6 @@ public class AutomobileRepository implements Repository<Automobile> {
         for (Automobile automobile : automobiles) {
             if (automobile != null) {
                 result.add(Optional.of(automobile));
-            } else {
-                result.add(Optional.empty());
             }
         }
         return result;
