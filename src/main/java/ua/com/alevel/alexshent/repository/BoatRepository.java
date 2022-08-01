@@ -2,12 +2,12 @@ package ua.com.alevel.alexshent.repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.com.alevel.alexshent.model.Automobile;
 import ua.com.alevel.alexshent.model.Boat;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 public class BoatRepository implements Repository<Boat> {
     private static final Logger LOGGER = LoggerFactory.getLogger(BoatRepository.class);
@@ -18,36 +18,49 @@ public class BoatRepository implements Repository<Boat> {
     }
 
     @Override
-    public Boat getById(String id) {
+    public Optional<Boat> getById(String id) {
         for (Boat boat : boats) {
             if (boat.getId().equals(id)) {
-                return boat;
+                return Optional.of(boat);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
-    public List<Boat> getAll() {
-        return boats;
+    public List<Optional<Boat>> getAll() {
+        List<Optional<Boat>> result = new LinkedList<>();
+        for (Boat boat : boats) {
+            if (boat != null) {
+                result.add(Optional.of(boat));
+            } else {
+                result.add(Optional.empty());
+            }
+        }
+        return result;
     }
 
     @Override
-    public boolean create(Boat boat) {
+    public boolean add(Boat boat) {
         boats.add(boat);
         return true;
     }
 
     @Override
-    public boolean create(List<Boat> boats) {
+    public boolean add(Optional<Boat> vehicleOptional) {
+        return false;
+    }
+
+    @Override
+    public boolean addList(List<Boat> boats) {
         return this.boats.addAll(boats);
     }
 
     @Override
     public boolean update(Boat boat) {
-        final Boat foundBoat = getById(boat.getId());
-        if (foundBoat != null) {
-            Boat.copy(boat, foundBoat);
+        final Optional<Boat> foundBoat = getById(boat.getId());
+        if (foundBoat.isPresent()) {
+            Boat.copy(boat, foundBoat.get());
             return true;
         }
         return false;
