@@ -28,4 +28,9 @@ public class DeleteAutomobileCommand implements Command {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public String toString() {
+        return "delete automobile";
+    }
 }

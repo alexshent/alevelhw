@@ -14,4 +14,9 @@ public class DisplayAllAutomobilesCommand implements Command {
     public void execute() {
         service.printAll();
     }
+
+    @Override
+    public String toString() {
+        return "display all automobiles";
+    }
 }

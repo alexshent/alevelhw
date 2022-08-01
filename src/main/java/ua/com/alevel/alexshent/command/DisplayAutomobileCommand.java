@@ -29,4 +29,9 @@ public class DisplayAutomobileCommand implements Command {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public String toString() {
+        return "display automobile";
+    }
 }

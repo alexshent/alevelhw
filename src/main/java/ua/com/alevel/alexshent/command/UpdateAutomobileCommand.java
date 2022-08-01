@@ -53,4 +53,9 @@ public class UpdateAutomobileCommand implements Command {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public String toString() {
+        return "update automobile";
+    }
 }
