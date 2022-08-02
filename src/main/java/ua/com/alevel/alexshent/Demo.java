@@ -1,7 +1,6 @@
 package ua.com.alevel.alexshent;
 
 import ua.com.alevel.alexshent.model.*;
-import ua.com.alevel.alexshent.repository.Repository;
 import ua.com.alevel.alexshent.service.AutomobileService;
 import ua.com.alevel.alexshent.service.BicycleService;
 import ua.com.alevel.alexshent.service.BoatService;
@@ -50,12 +49,12 @@ public class Demo {
     }
 
     public void useContainer() {
-        Container<Vehicle> container = new Container<>();
+        Container<Boat, Integer> container = new Container<>();
         Boat boat = new Boat("AAA", BoatManufactures.FFF, BigDecimal.valueOf(1000.00), true);
         container.addVehicle(boat);
         System.out.println(separatorLine);
         System.out.println("vehicle class = " + container.getVehicleClassName());
-        System.out.println("price = " + container.getPrice());
+        System.out.println("price = " + container.getVehiclePrice());
         System.out.println("discount price = " + container.getDiscountPrice().toString());
         System.out.println("extra charge price = " + container.getExtraChargePrice(100));
     }

@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Random;
 
-public class Container <V extends Vehicle> {
+public class Container <V extends Vehicle, N extends Number> {
     private V vehicle;
 
     public void addVehicle(V vehicle) {
@@ -17,7 +17,7 @@ public class Container <V extends Vehicle> {
         return vehicle.getClass().getName();
     }
 
-    public BigDecimal getPrice() {
+    public BigDecimal getVehiclePrice() {
         return vehicle.getPrice();
     }
 
@@ -32,7 +32,7 @@ public class Container <V extends Vehicle> {
         return result.setScale(2, RoundingMode.CEILING);
     }
 
-    public BigDecimal getExtraChargePrice(Number extraCharge) {
+    public BigDecimal getExtraChargePrice(N extraCharge) {
         return  vehicle.getPrice().add(
                 BigDecimal.valueOf(extraCharge.doubleValue())
         );
