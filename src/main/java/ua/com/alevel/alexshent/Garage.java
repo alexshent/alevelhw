@@ -5,10 +5,10 @@ import java.util.*;
 
 public class Garage implements Iterable<Refresh> {
 
-    protected LinkedList<Refresh> list;
+    protected MyLinkedList<Refresh> list;
 
     public Garage() {
-        list = new LinkedList<>();
+        list = new MyLinkedList<>();
     }
 
     public void add(Refresh refresh) {
