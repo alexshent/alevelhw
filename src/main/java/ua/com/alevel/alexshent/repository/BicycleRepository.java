@@ -3,11 +3,11 @@ package ua.com.alevel.alexshent.repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.com.alevel.alexshent.model.Bicycle;
-import ua.com.alevel.alexshent.service.BicycleService;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 public class BicycleRepository implements Repository<Bicycle> {
     private static final Logger LOGGER = LoggerFactory.getLogger(BicycleRepository.class);
@@ -18,36 +18,49 @@ public class BicycleRepository implements Repository<Bicycle> {
     }
 
     @Override
-    public Bicycle getById(String id) {
+    public Optional<Bicycle> getById(String id) {
         for (Bicycle bicycle : bicycles) {
             if (bicycle.getId().equals(id)) {
-                return bicycle;
+                return Optional.of(bicycle);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
-    public List<Bicycle> getAll() {
-        return bicycles;
+    public List<Optional<Bicycle>> getAll() {
+        List<Optional<Bicycle>> result = new LinkedList<>();
+        for (Bicycle bicycle : bicycles) {
+            if (bicycle != null) {
+                result.add(Optional.of(bicycle));
+            } else {
+                result.add(Optional.empty());
+            }
+        }
+        return result;
     }
 
     @Override
-    public boolean create(Bicycle bicycle) {
+    public boolean add(Bicycle bicycle) {
         bicycles.add(bicycle);
         return true;
     }
 
     @Override
-    public boolean create(List<Bicycle> bicycles) {
+    public boolean add(Optional<Bicycle> vehicleOptional) {
+        return false;
+    }
+
+    @Override
+    public boolean addList(List<Bicycle> bicycles) {
         return this.bicycles.addAll(bicycles);
     }
 
     @Override
     public boolean update(Bicycle bicycle) {
-        final Bicycle foundBicycle = getById(bicycle.getId());
-        if (foundBicycle != null) {
-            Bicycle.copy(bicycle, foundBicycle);
+        final Optional<Bicycle> foundBicycle = getById(bicycle.getId());
+        if (foundBicycle.isPresent()) {
+            Bicycle.copy(bicycle, foundBicycle.get());
             return true;
         }
         return false;

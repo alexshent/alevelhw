@@ -1,6 +1,9 @@
 package ua.com.alevel.alexshent;
 
-import ua.com.alevel.alexshent.model.*;
+import ua.com.alevel.alexshent.model.Automobile;
+import ua.com.alevel.alexshent.model.Bicycle;
+import ua.com.alevel.alexshent.model.Boat;
+import ua.com.alevel.alexshent.model.BoatManufactures;
 import ua.com.alevel.alexshent.service.AutomobileService;
 import ua.com.alevel.alexshent.service.BicycleService;
 import ua.com.alevel.alexshent.service.BoatService;
@@ -31,7 +34,7 @@ public class Demo {
     }
 
     public void changeBoatProduct() {
-        Boat  boat = boatService.getProductById(targetBoatId);
+        Boat  boat = boatService.getProductById(targetBoatId).orElseThrow();
         System.out.println(separatorLine);
         boatService.printAll();
         boat.setModel("m-m-m");
