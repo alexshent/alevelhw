@@ -1,11 +1,13 @@
 package ua.com.alevel.alexshent.model;
 
+import ua.com.alevel.alexshent.binarytree.Costly;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class Vehicle {
+public abstract class Vehicle implements Costly {
     protected String id;
     protected String model;
     protected BigDecimal price;
@@ -33,6 +35,7 @@ public abstract class Vehicle {
         this.model = model;
     }
 
+    @Override
     public BigDecimal getPrice() {
         return price;
     }
