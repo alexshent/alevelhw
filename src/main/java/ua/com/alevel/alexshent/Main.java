@@ -1,8 +1,7 @@
 package ua.com.alevel.alexshent;
 
 public class Main {
-
     public static void main(String[] args) {
-        Demo demo = new ua.com.alevel.alexshent.Demo();
+        Demo demo = new Demo();
     }
 }
