@@ -3,6 +3,7 @@ package ua.com.alevel.alexshent.service;
 import ua.com.alevel.alexshent.repository.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 public abstract class Service<V>  {
@@ -10,16 +11,16 @@ public abstract class Service<V>  {
     protected static final Random RANDOM = new Random();
 
     public void printAll() {
-        for (V vehicle : repository.getAll()) {
-            System.out.println(vehicle);
+        for (Optional<V> vehicleOptional : repository.getAll()) {
+            vehicleOptional.ifPresent(System.out::println);
         }
     }
 
     public void saveProducts(List<V> vehicles) {
-        repository.create(vehicles);
+        repository.addList(vehicles);
     }
 
-    public V getProductById(String id) {
+    public Optional<V> getProductById(String id) {
         return repository.getById(id);
     }
 
