@@ -1,5 +1,6 @@
 package ua.com.alevel.alexshent;
 
+import ua.com.alevel.alexshent.command.CommandExecutor;
 import ua.com.alevel.alexshent.model.Automobile;
 import ua.com.alevel.alexshent.model.Bicycle;
 import ua.com.alevel.alexshent.model.Boat;
@@ -7,7 +8,11 @@ import ua.com.alevel.alexshent.model.BoatManufactures;
 import ua.com.alevel.alexshent.service.AutomobileService;
 import ua.com.alevel.alexshent.service.BicycleService;
 import ua.com.alevel.alexshent.service.BoatService;
+import ua.com.alevel.alexshent.service.Service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -49,6 +54,23 @@ public class Demo {
         boatService.deleteProduct(targetBoatId);
         System.out.println(separatorLine);
         boatService.printAll();
+    }
+
+    public void useMenu() {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        Service<Automobile> service = new AutomobileService();
+        CommandExecutor commandExecutor = new CommandExecutor(service);
+        int option;
+        do {
+            System.out.println(commandExecutor.getOptionsMenu());
+            try {
+                String userInput = reader.readLine();
+                option = Integer.parseInt(userInput);
+                commandExecutor.executeCommand(option);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } while (option != 0);
     }
 
     public void useContainer() {
