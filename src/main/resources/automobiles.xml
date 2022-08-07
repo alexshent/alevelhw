@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<automobiles>
+    <model>XML1</model>
+    <price currency="USD">1500</price>
+    <manufacturer>BMW</manufacturer>
+    <bodyType>BBB</bodyType>
+    <createdAt>2022-07-25T18:58:23Z</createdAt>
+    <tripCounter>15</tripCounter>
+    <engine>
+        <volume>1</volume>
+        <brand>BRR</brand>
+    </engine>
+
+    <model>XML2</model>
+    <price currency="USD">1500</price>
+    <manufacturer>BMW</manufacturer>
+    <bodyType>BBB</bodyType>
+    <createdAt>2022-07-25T18:58:23Z</createdAt>
+    <tripCounter>15</tripCounter>
+    <engine>
+        <volume>2</volume>
+        <brand>BRR</brand>
+    </engine>
+
+    <model>XML3</model>
+    <price currency="USD">1500</price>
+    <manufacturer>BMW</manufacturer>
+    <bodyType>BBB</bodyType>
+    <createdAt>2022-07-25T18:58:23Z</createdAt>
+    <tripCounter>15</tripCounter>
+    <engine>
+        <volume>3</volume>
+        <brand>BRR</brand>
+    </engine>
+</automobiles>

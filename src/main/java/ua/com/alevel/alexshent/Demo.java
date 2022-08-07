@@ -2,6 +2,7 @@ package ua.com.alevel.alexshent;
 
 import ua.com.alevel.alexshent.command.CommandExecutor;
 import ua.com.alevel.alexshent.model.*;
+import ua.com.alevel.alexshent.reader.AutomobilesReader;
 import ua.com.alevel.alexshent.service.AutomobileService;
 import ua.com.alevel.alexshent.service.BicycleService;
 import ua.com.alevel.alexshent.service.BoatService;
@@ -11,6 +12,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -55,6 +58,30 @@ public class Demo {
         boatService.deleteProduct(targetBoatId);
         System.out.println(separatorLine);
         boatService.printAll();
+    }
+
+    public void readObjectsFromFiles() {
+        AutomobilesReader automobilesReader = new AutomobilesReader();
+
+        // xml
+        try {
+            String resourceFileName = "automobiles.xml";
+            Path path = Path.of(ClassLoader.getSystemResource(resourceFileName).toURI());
+            List<Automobile> list = automobilesReader.readXmlList(path);
+            list.forEach(System.out::println);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+
+        // json
+        try {
+            String resourceFileName = "automobiles.json";
+            Path path = Path.of(ClassLoader.getSystemResource(resourceFileName).toURI());
+            List<Automobile> list = automobilesReader.readJsonList(path);
+            list.forEach(System.out::println);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void useStreams() {
