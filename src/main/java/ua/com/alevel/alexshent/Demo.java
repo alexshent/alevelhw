@@ -52,36 +52,13 @@ public class Demo {
     }
 
     public void readObjectsFromFiles() {
+        AutomobilesReader automobilesReader = new AutomobilesReader();
 
         // xml
         try {
             String resourceFileName = "automobiles.xml";
             Path path = Path.of(ClassLoader.getSystemResource(resourceFileName).toURI());
-            AutomobilesListRegularExpressions automobilesListRegularExpressions =
-                    new AutomobilesListRegularExpressions(
-                            "<automobiles>(.+)</automobiles>"
-                    );
-            AutomobileRegularExpressions automobileRegularExpressions =
-                    new AutomobileRegularExpressions(
-                            "<model>.+?</engine>",
-                            "<model>(.+)</model>",
-                            "<price.*>(.+)</price>",
-                            "<manufacturer>(.+)</manufacturer>",
-                            "<bodyType>(.+)</bodyType>",
-                            "<createdAt>(.+)</createdAt>",
-                            "<tripCounter>(.+)</tripCounter>"
-                    );
-            EngineRegularExpressions engineRegularExpressions =
-                    new EngineRegularExpressions(
-                            "<engine>(.+)</engine>",
-                            "<volume>(.+)</volume>",
-                            "<brand>(.+)</brand>"
-                    );
-            AutomobileParser automobileParser = new AutomobileParser();
-            automobileParser.setAutomobilesListRegularExpressions(automobilesListRegularExpressions);
-            automobileParser.setAutomobileRegularExpressions(automobileRegularExpressions);
-            automobileParser.setEngineRegularExpressions(engineRegularExpressions);
-            List<Automobile> list = automobileParser.parseAutomobilesList(path);
+            List<Automobile> list = automobilesReader.readXmlList(path);
             list.forEach(System.out::println);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
@@ -91,31 +68,7 @@ public class Demo {
         try {
             String resourceFileName = "automobiles.json";
             Path path = Path.of(ClassLoader.getSystemResource(resourceFileName).toURI());
-            AutomobilesListRegularExpressions automobilesListRegularExpressions =
-                    new AutomobilesListRegularExpressions(
-                            "\\[(.+)\\]"
-                    );
-            AutomobileRegularExpressions automobileRegularExpressions =
-                    new AutomobileRegularExpressions(
-                            "\\{\"model\".+?\\}\\},?",
-                            "\"model\":\"(.+?)\"",
-                            "\"price\":\"(.+?)\"",
-                            "\"manufacturer\":\"(.+?)\"",
-                            "\"bodyType\":\"(.+?)\"",
-                            "\"createdAt\":\"(.+?)\"",
-                            "\"tripCounter\":\"(.+?)\""
-                    );
-            EngineRegularExpressions engineRegularExpressions =
-                    new EngineRegularExpressions(
-                            "\"engine\":\\{(.+?)\\}",
-                            "\"volume\":\"(.+?)\"",
-                            "\"brand\":\"(.+?)\""
-                    );
-            AutomobileParser automobileParser = new AutomobileParser();
-            automobileParser.setAutomobilesListRegularExpressions(automobilesListRegularExpressions);
-            automobileParser.setAutomobileRegularExpressions(automobileRegularExpressions);
-            automobileParser.setEngineRegularExpressions(engineRegularExpressions);
-            List<Automobile> list = automobileParser.parseAutomobilesList(path);
+            List<Automobile> list = automobilesReader.readJsonList(path);
             list.forEach(System.out::println);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
