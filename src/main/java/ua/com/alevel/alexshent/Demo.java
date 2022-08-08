@@ -1,15 +1,12 @@
 package ua.com.alevel.alexshent;
 
 import ua.com.alevel.alexshent.model.*;
-import ua.com.alevel.alexshent.repository.Repository;
 import ua.com.alevel.alexshent.service.AutomobileService;
 import ua.com.alevel.alexshent.service.BicycleService;
 import ua.com.alevel.alexshent.service.BoatService;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -53,27 +50,26 @@ public class Demo {
     }
 
     public void useGarage() {
-        Vehicle vehicle = new Automobile("AAA", AutomobileManufacturers.BMW, BigDecimal.valueOf(123.45), "BBB");
-        Refresh refresh1 = new Refresh(vehicle, 1, LocalDateTime.now());
-        Refresh refresh2 = new Refresh(vehicle, 2, LocalDateTime.now());
-        Refresh refresh3 = new Refresh(vehicle, 3, LocalDateTime.now());
-        Garage garage = new Garage();
-        garage.add(refresh3);
-        garage.add(refresh2);
-        garage.add(refresh1);
+        System.out.println("----- Garage -----");
+        Automobile automobile1 = new Automobile("AAA1", AutomobileManufacturers.BMW, BigDecimal.valueOf(123.45), "BBB1");
+        Automobile automobile2 = new Automobile("AAA2", AutomobileManufacturers.BMW, BigDecimal.valueOf(123.45), "BBB2");
+        Garage<Automobile> garage = new Garage<>();
+        garage.add(automobile1, 1);
+        garage.add(automobile1, 2);
+        garage.add(automobile1, 3);
         System.out.println("size = " + garage.getSize());
         System.out.println("first = " + garage.getFirstDate());
         System.out.println("last = " + garage.getLastDate());
-        System.out.println(garage.findById(2).toString());
-        Refresh refresh4 = new Refresh(vehicle, 4, LocalDateTime.now());
-        garage.replace(1, refresh4);
-        garage.delete(2);
-        for (Refresh refresh : garage) {
-            System.out.println(refresh);
+        System.out.println(garage.getVehicleForRefreshNumber(2));
+        garage.setVehicleForRefreshNumber(3, automobile2);
+        garage.removeNodeByRefreshNumber(1);
+        for (Automobile automobile : garage) {
+            System.out.println(automobile);
         }
     }
 
     public void useVehicleComparators() {
+        System.out.println("----- Comparators -----");
         class VehicleComparatorPriceDesc<V extends Vehicle> implements Comparator<V> {
             @Override
             public int compare(V first, V second) {
