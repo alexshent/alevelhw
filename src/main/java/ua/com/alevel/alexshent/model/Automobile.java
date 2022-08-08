@@ -18,6 +18,13 @@ public class Automobile extends Vehicle {
         createdAt = LocalDateTime.now();
     }
 
+    public Automobile(AutomobileBuilder automobileBuilder) {
+        super(automobileBuilder.getModel(), automobileBuilder.getPrice());
+        this.id = automobileBuilder.getId();
+        this.bodyType = automobileBuilder.getBodyType();
+        this.manufacturer = automobileBuilder.getManufacturer();
+    }
+
     public AutomobileManufacturers getManufacturer() {
         return manufacturer;
     }
