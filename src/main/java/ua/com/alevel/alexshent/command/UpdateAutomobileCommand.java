@@ -35,7 +35,7 @@ public class UpdateAutomobileCommand implements Command {
             System.out.println("body type: ");
             String bodyType = reader.readLine();
 
-            Automobile automobile = service.getProductById(id);
+            Automobile automobile = service.getProductById(id).get();
             if (model.length() > 0) {
                 automobile.setModel(model);
             }

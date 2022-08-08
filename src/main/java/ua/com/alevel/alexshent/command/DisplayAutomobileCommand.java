@@ -22,7 +22,7 @@ public class DisplayAutomobileCommand implements Command {
             String id = reader.readLine();
 
             if (id.length() > 0) {
-                Automobile automobile = service.getProductById(id);
+                Automobile automobile = service.getProductById(id).get();
                 System.out.println(automobile);
             }
         } catch (IOException e) {
