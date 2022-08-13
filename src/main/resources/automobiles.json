@@ -1,0 +1,41 @@
+[
+  {
+    "model": "JSON1",
+    "price": "1500",
+    "currency": "USD",
+    "manufacturer": "BMW",
+    "bodyType": "BBB",
+    "createdAt": "2022-07-25T18:58:23Z",
+    "tripCounter": "15",
+    "engine": {
+      "volume": "2",
+      "brand": "BRR"
+    }
+  },
+  {
+    "model": "JSON2",
+    "price": "1500",
+    "currency": "USD",
+    "manufacturer": "BMW",
+    "bodyType": "BBB",
+    "createdAt": "2022-07-25T18:58:23Z",
+    "tripCounter": "15",
+    "engine": {
+      "volume": "2",
+      "brand": "BRR"
+    }
+  },
+  {
+    "model": "JSON3",
+    "price": "1500",
+    "currency": "USD",
+    "manufacturer": "BMW",
+    "bodyType": "BBB",
+    "createdAt": "2022-07-25T18:58:23Z",
+    "tripCounter": "15",
+    "engine": {
+      "volume": "2",
+      "brand": "BRR"
+    }
+  }
+]

@@ -1,16 +1,21 @@
 package ua.com.alevel.alexshent.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Automobile extends Vehicle {
     private AutomobileManufacturers manufacturer;
     private String bodyType;
+    private LocalDateTime createdAt;
+    private long tripCounter;
+    private Engine engine;
 
     public Automobile(String model, AutomobileManufacturers manufacturer, BigDecimal price, String bodyType) {
         super(model, price);
         this.manufacturer = manufacturer;
         this.bodyType = bodyType;
+        createdAt = LocalDateTime.now();
     }
 
     public AutomobileManufacturers getManufacturer() {
@@ -27,6 +32,30 @@ public class Automobile extends Vehicle {
 
     public void setBodyType(String bodyType) {
         this.bodyType = bodyType;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public long getTripCounter() {
+        return tripCounter;
+    }
+
+    public void setTripCounter(long tripCounter) {
+        this.tripCounter = tripCounter;
+    }
+
+    public Engine getEngine() {
+        return engine;
+    }
+
+    public void setEngine(Engine engine) {
+        this.engine = engine;
     }
 
     @Override
