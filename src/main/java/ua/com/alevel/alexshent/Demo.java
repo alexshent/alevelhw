@@ -258,4 +258,15 @@ public class Demo {
         System.out.println("discount price = " + container.getDiscountPrice().toString());
         System.out.println("extra charge price = " + container.getExtraChargePrice(100));
     }
+
+    public void useAutomobileBuilder() {
+        AutomobileBuilder automobileBuilder = new AutomobileBuilder();
+        automobileBuilder.withId("AAA123");
+        automobileBuilder.withModel("AAA");
+        automobileBuilder.withPrice(BigDecimal.valueOf(12345.00));
+        automobileBuilder.withBodyType("BBB");
+        automobileBuilder.withManufacturer(AutomobileManufacturers.BMW);
+        Automobile automobile = automobileBuilder.build();
+        System.out.println(automobile.toString());
+    }
 }
