@@ -10,6 +10,16 @@ public class AutomobileBuilder {
     private static final int BODY_TYPE_MAX_LENGTH = 20;
     private AutomobileManufacturers manufacturer = null;
 
+    private void checkBodyType() {
+        if (bodyType.length() > BODY_TYPE_MAX_LENGTH) {
+            throw new IllegalArgumentException(
+                    "body type must be less or equal than " +
+                            BODY_TYPE_MAX_LENGTH +
+                            " characters"
+            );
+        }
+    }
+
     public String getId() {
         return id;
     }
@@ -46,13 +56,7 @@ public class AutomobileBuilder {
     }
 
     public AutomobileBuilder withBodyType(String bodyType) {
-        if (bodyType.length() > BODY_TYPE_MAX_LENGTH) {
-            throw new IllegalArgumentException(
-                    "body type must be less or equal than " +
-                            BODY_TYPE_MAX_LENGTH +
-                            " characters"
-            );
-        }
+        checkBodyType();
         this.bodyType = bodyType;
         return this;
     }
@@ -63,6 +67,7 @@ public class AutomobileBuilder {
     }
 
     public Automobile build() {
+        checkBodyType();
         return new Automobile(this);
     }
 }
