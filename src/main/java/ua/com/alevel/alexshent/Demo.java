@@ -269,4 +269,22 @@ public class Demo {
         Automobile automobile = automobileBuilder.build();
         System.out.println(automobile.toString());
     }
+
+    public void useAnnotations() {
+        Injector injector = new Injector();
+
+        // different objects
+        Hello hello1 = (Hello) injector.getInstance(Hello.class);
+        System.out.println(hello1);
+        Hello hello2 = (Hello) injector.getInstance(Hello.class);
+        System.out.println(hello2);
+        System.out.println(hello1 != hello2);
+
+        // same object
+        HelloSingleton helloSingleton1 = (HelloSingleton) injector.getInstance(HelloSingleton.class);
+        System.out.println(helloSingleton1);
+        HelloSingleton helloSingleton2 = (HelloSingleton) injector.getInstance(HelloSingleton.class);
+        System.out.println(helloSingleton2);
+        System.out.println(helloSingleton1 == helloSingleton2);
+    }
 }
