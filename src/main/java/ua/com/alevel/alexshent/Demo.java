@@ -2,7 +2,6 @@ package ua.com.alevel.alexshent;
 
 import ua.com.alevel.alexshent.model.*;
 import ua.com.alevel.alexshent.command.CommandExecutor;
-import ua.com.alevel.alexshent.model.*;
 import ua.com.alevel.alexshent.reader.AutomobilesReader;
 import ua.com.alevel.alexshent.service.AutomobileService;
 import ua.com.alevel.alexshent.service.BicycleService;
@@ -16,7 +15,6 @@ import java.util.List;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.*;
@@ -271,7 +269,10 @@ public class Demo {
     }
 
     public void useAnnotations() {
-        Injector injector = new Injector();
+
+        Reflector reflector = new Reflector("ua\\.com[\\.a-z]+");
+        Injector injector = new Injector(reflector);
+        injector.run();
 
         // different objects
         Hello hello1 = (Hello) injector.getInstance(Hello.class);

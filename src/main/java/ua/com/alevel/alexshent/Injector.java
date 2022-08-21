@@ -3,21 +3,33 @@ package ua.com.alevel.alexshent;
 import ua.com.alevel.alexshent.annotation.Singleton;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Injector {
     private final List<Object> singletons = new ArrayList<>();
+    private final Reflector reflector;
+
+    public Injector(Reflector reflector) {
+        this.reflector = reflector;
+    }
+
+    public void run() {
+        System.out.println("RUN begin");
+        Set<Class<?>> classes = reflector.getAllClassesOfPackages();
+        classes.forEach(c -> {
+                    if (c.isAnnotationPresent(Singleton.class)) {
+                        Object instance = getSingletonInstance(c);
+                        System.out.println(instance);
+                    }
+                });
+        System.out.println("RUN end");
+    }
 
     public Object getInstance(Class<?> instanceClass) {
         Object instance;
         if (instanceClass.isAnnotationPresent(Singleton.class)) {
             // singleton
             instance = getSingletonInstance(instanceClass);
-            if (instance == null) {
-                instance = createNewInstance(instanceClass);
-                addSingletonInstance(instance);
-            }
         } else {
             // not a singleton
             instance = createNewInstance(instanceClass);
@@ -42,15 +54,17 @@ public class Injector {
     }
 
     private Object getSingletonInstance(Class<?> instanceClass) {
+        if (!instanceClass.isAnnotationPresent(Singleton.class)) {
+            throw new IllegalArgumentException("class does not have the singleton annotation");
+        }
         for (Object object : singletons) {
             if (object.getClass().equals(instanceClass)) {
                 return object;
             }
         }
-        return null;
-    }
-
-    private void addSingletonInstance(Object object) {
-        singletons.add(object);
+        // create instance and add to singletons if not available
+        Object instance = createNewInstance(instanceClass);
+        singletons.add(instance);
+        return instance;
     }
 }
