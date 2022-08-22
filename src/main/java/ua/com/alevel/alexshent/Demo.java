@@ -3,6 +3,7 @@ package ua.com.alevel.alexshent;
 import ua.com.alevel.alexshent.model.*;
 import ua.com.alevel.alexshent.command.CommandExecutor;
 import ua.com.alevel.alexshent.reader.AutomobilesReader;
+import ua.com.alevel.alexshent.repository.BoatRepository;
 import ua.com.alevel.alexshent.service.AutomobileService;
 import ua.com.alevel.alexshent.service.BicycleService;
 import ua.com.alevel.alexshent.service.BoatService;
@@ -269,23 +270,14 @@ public class Demo {
     }
 
     public void useAnnotations() {
-
         Reflector reflector = new Reflector("ua\\.com[\\.a-z]+");
         Injector injector = new Injector(reflector);
         injector.run();
 
-        // different objects
-        Hello hello1 = (Hello) injector.getInstance(Hello.class);
-        System.out.println(hello1);
-        Hello hello2 = (Hello) injector.getInstance(Hello.class);
-        System.out.println(hello2);
-        System.out.println(hello1 != hello2);
-
-        // same object
-        HelloSingleton helloSingleton1 = (HelloSingleton) injector.getInstance(HelloSingleton.class);
-        System.out.println(helloSingleton1);
-        HelloSingleton helloSingleton2 = (HelloSingleton) injector.getInstance(HelloSingleton.class);
-        System.out.println(helloSingleton2);
-        System.out.println(helloSingleton1 == helloSingleton2);
+        BoatRepository boatRepository = (BoatRepository) injector.getInstance(BoatRepository.class, null);
+        BoatService boatService = (BoatService) injector.getInstance(BoatService.class, BoatRepository.class);
+        final int boatsNumber = 5;
+        boatService.saveProducts(boatService.createBoats(boatsNumber));
+        boatService.printAll();
     }
 }
