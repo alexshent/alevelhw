@@ -3,10 +3,8 @@ package ua.com.alevel.alexshent;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.lang.annotation.Annotation;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Reflector {
@@ -16,16 +14,19 @@ public class Reflector {
         this.packageNameRegularExpression = packageNameRegularExpression;
     }
 
-    public Set<Class<?>> getAllClassesOfPackages() {
-        Set<Class<?>> allClasses = new HashSet<>();
+    public Set<Class<?>> getAllClassesWithAnnotations(List<Annotation> annotations) {
+        Set<Class<?>> result = new HashSet<>();
         List<Package> packages = this.getAllPackages(packageNameRegularExpression);
         packages.forEach(p -> {
             Set<Class<?>> classes = this.findAllClassesUsingClassLoader(p.getName());
-            if (!classes.isEmpty()) {
-                allClasses.addAll(classes);
-            }
+            classes.forEach(c -> {
+                Annotation[] declaredAnnotations = c.getDeclaredAnnotations();
+                if (!Collections.disjoint(Arrays.asList(declaredAnnotations), annotations)) {
+                    result.add(c);
+                }
+            });
         });
-        return allClasses;
+        return result;
     }
 
     private Set<Class<?>> findAllClassesUsingClassLoader(String packageName) {
