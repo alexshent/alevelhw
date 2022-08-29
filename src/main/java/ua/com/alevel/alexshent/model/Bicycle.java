@@ -13,6 +13,15 @@ public class Bicycle extends Vehicle {
         this.numberOfWheels = numberOfWheels;
     }
 
+    public Bicycle(BicycleBuilder builder) {
+        super(builder.getModel(), builder.getPrice());
+        this.id = builder.getId();
+        this.components = builder.getComponents();
+        this.manufacturer = builder.getManufacturer();
+        this.numberOfWheels = builder.getNumberOfWheels();
+        this.invoiceId = builder.getInvoiceId();
+    }
+
     public BicycleManufactures getManufacturer() {
         return manufacturer;
     }
