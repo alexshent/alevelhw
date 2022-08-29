@@ -23,6 +23,11 @@ public class Automobile extends Vehicle {
         this.id = automobileBuilder.getId();
         this.bodyType = automobileBuilder.getBodyType();
         this.manufacturer = automobileBuilder.getManufacturer();
+        this.components = automobileBuilder.getComponents();
+        this.createdAt = automobileBuilder.getCreatedAt();
+        this.tripCounter = automobileBuilder.getTripCounter();
+        this.engine = automobileBuilder.getEngine();
+        this.invoiceId = automobileBuilder.getInvoiceId();
     }
 
     public AutomobileManufacturers getManufacturer() {
@@ -90,6 +95,9 @@ public class Automobile extends Vehicle {
                 ", model=" + model +
                 ", price=" + price +
                 ", manufacturer=" + manufacturer +
+                ", created at = " + createdAt +
+                ", trip counter = " + tripCounter +
+                ", invoice id = " + invoiceId +
                 '}';
     }
 
