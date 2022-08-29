@@ -2,8 +2,8 @@ package ua.com.alevel.alexshent;
 
 import ua.com.alevel.alexshent.model.*;
 import ua.com.alevel.alexshent.command.CommandExecutor;
-import ua.com.alevel.alexshent.model.*;
 import ua.com.alevel.alexshent.reader.AutomobilesReader;
+import ua.com.alevel.alexshent.repository.BoatRepository;
 import ua.com.alevel.alexshent.service.AutomobileService;
 import ua.com.alevel.alexshent.service.BicycleService;
 import ua.com.alevel.alexshent.service.BoatService;
@@ -16,7 +16,6 @@ import java.util.List;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.*;
@@ -268,5 +267,17 @@ public class Demo {
         automobileBuilder.withManufacturer(AutomobileManufacturers.BMW);
         Automobile automobile = automobileBuilder.build();
         System.out.println(automobile.toString());
+    }
+
+    public void useAnnotations() {
+        Reflector reflector = new Reflector("ua\\.com[\\.a-z]+");
+        Injector injector = new Injector(reflector);
+        injector.run();
+
+        BoatRepository boatRepository = (BoatRepository) injector.getInstance(BoatRepository.class, null);
+        BoatService boatService = (BoatService) injector.getInstance(BoatService.class, BoatRepository.class);
+        final int boatsNumber = 5;
+        boatService.saveProducts(boatService.createBoats(boatsNumber));
+        boatService.printAll();
     }
 }

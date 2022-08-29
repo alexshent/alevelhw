@@ -2,6 +2,7 @@ package ua.com.alevel.alexshent.repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.com.alevel.alexshent.annotation.Singleton;
 import ua.com.alevel.alexshent.model.Boat;
 
 import java.util.Iterator;
@@ -9,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+@Singleton
 public class BoatRepository implements Repository<Boat> {
     private static final Logger LOGGER = LoggerFactory.getLogger(BoatRepository.class);
     private final List<Boat> boats;
