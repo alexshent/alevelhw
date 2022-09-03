@@ -12,6 +12,7 @@ public abstract class Vehicle implements Costly {
     protected String model;
     protected BigDecimal price;
     protected List<String> components;
+    protected String invoiceId;
 
     protected Vehicle(String model, BigDecimal price) {
         this.id = UUID.randomUUID().toString();
@@ -51,7 +52,27 @@ public abstract class Vehicle implements Costly {
         return Optional.empty();
     }
 
+    public String getComponentsAsString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        components.forEach(c -> {
+            sb.append(c);
+            sb.append(",");
+        });
+        sb.deleteCharAt(sb.length() - 1);
+        sb.append("}");
+        return sb.toString();
+    }
+
     public void setComponents(List<String> components) {
         this.components = components;
+    }
+
+    public String getInvoiceId() {
+        return invoiceId;
+    }
+
+    public void setInvoiceId(String invoiceId) {
+        this.invoiceId = invoiceId;
     }
 }

@@ -6,25 +6,25 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-public abstract class Service<V>  {
-    protected Repository<V> repository;
+public abstract class Service<T>  {
+    protected Repository<T> repository;
     protected static final Random RANDOM = new Random();
 
     public void printAll() {
-        for (Optional<V> vehicleOptional : repository.getAll()) {
+        for (Optional<T> vehicleOptional : repository.getAll()) {
             vehicleOptional.ifPresent(System.out::println);
         }
     }
 
-    public void saveProducts(List<V> vehicles) {
-        repository.addList(vehicles);
+    public void saveProducts(List<T> products) {
+        repository.addList(products);
     }
 
-    public Optional<V> getProductById(String id) {
+    public Optional<T> getProductById(String id) {
         return repository.getById(id);
     }
 
-    public boolean updateProduct(V product) {
+    public boolean updateProduct(T product) {
         return repository.update(product);
     }
 
