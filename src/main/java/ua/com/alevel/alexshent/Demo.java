@@ -1,8 +1,9 @@
 package ua.com.alevel.alexshent;
 
-import ua.com.alevel.alexshent.model.*;
 import ua.com.alevel.alexshent.command.CommandExecutor;
+import ua.com.alevel.alexshent.model.*;
 import ua.com.alevel.alexshent.reader.AutomobilesReader;
+import ua.com.alevel.alexshent.repository.BoatRepository;
 import ua.com.alevel.alexshent.repository.database.AutomobileRepository;
 import ua.com.alevel.alexshent.repository.database.BicycleRepository;
 import ua.com.alevel.alexshent.repository.database.InvoiceRepository;
@@ -11,16 +12,13 @@ import ua.com.alevel.alexshent.service.BicycleService;
 import ua.com.alevel.alexshent.service.BoatService;
 import ua.com.alevel.alexshent.service.Service;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -497,5 +495,17 @@ public class Demo {
         //useJDBC_invoiceRepository();
 
         JDBC.closeConnection();
+    }
+
+    public void useAnnotations() {
+        Reflector reflector = new Reflector("ua\\.com[\\.a-z]+");
+        Injector injector = new Injector(reflector);
+        injector.run();
+
+        BoatRepository boatRepository = (BoatRepository) injector.getInstance(BoatRepository.class, null);
+        BoatService boatService = (BoatService) injector.getInstance(BoatService.class, BoatRepository.class);
+        final int boatsNumber = 5;
+        boatService.saveProducts(boatService.createBoats(boatsNumber));
+        boatService.printAll();
     }
 }
