@@ -10,6 +10,10 @@ public class Invoice {
     private String name;
     private List<Vehicle> vehicles;
 
+    public Invoice() {
+
+    }
+
     public Invoice(InvoiceBuilder builder) {
         this.id = builder.getId();
         this.createdAt = builder.getCreatedAt();

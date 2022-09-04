@@ -97,6 +97,7 @@ public class Automobile extends Vehicle {
                 ", manufacturer=" + manufacturer +
                 ", created at = " + createdAt +
                 ", trip counter = " + tripCounter +
+                ", engine = " + engine.toString() +
                 ", invoice id = " + invoiceId +
                 '}';
     }
