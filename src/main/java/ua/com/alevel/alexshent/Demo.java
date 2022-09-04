@@ -1,5 +1,14 @@
 package ua.com.alevel.alexshent;
 
+import com.mongodb.MongoException;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.BsonDocument;
+import org.bson.BsonInt64;
+import org.bson.Document;
+import org.bson.conversions.Bson;
 import ua.com.alevel.alexshent.command.CommandExecutor;
 import ua.com.alevel.alexshent.model.*;
 import ua.com.alevel.alexshent.reader.AutomobilesReader;
@@ -48,7 +57,7 @@ public class Demo {
     }
 
     public void changeBoatProduct() {
-        Boat  boat = boatService.getProductById(targetBoatId).orElseThrow();
+        Boat boat = boatService.getProductById(targetBoatId).orElseThrow();
         System.out.println(separatorLine);
         boatService.printAll();
         boat.setModel("m-m-m");
@@ -129,6 +138,7 @@ public class Demo {
             System.out.println(automobile.toString());
         }
     }
+
     public void readObjectsFromFiles() {
         AutomobilesReader automobilesReader = new AutomobilesReader();
 
