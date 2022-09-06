@@ -24,4 +24,14 @@ public class Engine {
     public void setBrand(String brand) {
         this.brand = brand;
     }
+
+    @Override
+    public String toString() {
+        return """
+                Engine {
+                    volume = %d,
+                    brand = %s
+                }
+                """.formatted(volume, brand);
+    }
 }

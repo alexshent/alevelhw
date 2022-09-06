@@ -46,6 +46,12 @@
             <artifactId>postgresql</artifactId>
             <version>42.4.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-sync -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>4.7.1</version>
+        </dependency>
 
     </dependencies>
 </project>
