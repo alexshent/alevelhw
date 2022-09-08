@@ -13,6 +13,27 @@
         <maven.compiler.target>18</maven.compiler.target>
     </properties>
 
+    <build>
+        <plugins>
+            <!-- https://flywaydb.org/documentation/usage/maven/ -->
+            <!-- https://flywaydb.org/documentation/getstarted/firststeps/maven -->
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>9.3.0</version>
+
+                <configuration>
+                    <user>postgres</user>
+                    <password>1</password>
+                    <schemas>
+                        <schema>public</schema>
+                    </schemas>
+                    <url>jdbc:postgresql://172.17.0.3/postgres</url>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>ch.qos.logback</groupId>
